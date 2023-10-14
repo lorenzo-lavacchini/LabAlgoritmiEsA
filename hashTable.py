@@ -1,15 +1,15 @@
 import LinkedList
 from LinkedList import element
-from LinkedList import listConc
+from LinkedList import linkedList
 class hashTable:
    
     #m -> grandezza della tabella
     #n -> numero di chiavi da memorizzare nella tabella (cardinalità di K)
     def __init__(self,n):
         self.m = (int)(n / 0.8)
-        self.T = [listConc]*self.m
+        self.T = [linkedList] * self.m
         for i in range(self.m):
-            self.T[i] = listConc()
+            self.T[i] = linkedList()
 
 
     def hashFunction(self, k):

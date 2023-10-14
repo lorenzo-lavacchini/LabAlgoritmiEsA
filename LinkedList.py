@@ -9,7 +9,7 @@ class element:
         self.next = None
 
 #creo la classe della lista (la lista viene create vuota)
-class listConc:
+class linkedList:
     def __init__(self):
         self.head=None
 
