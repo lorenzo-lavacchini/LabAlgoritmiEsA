@@ -6,7 +6,7 @@ from timeit import default_timer as timer
 import random
 import matplotlib.pyplot as plt
 from hashTable import hashTable
-
+import matplotlib.patches as mpatch
 def createLinkedListFromGivenSet(K):
     newList = linkedList()
     for i in range (len(K)):
@@ -83,6 +83,12 @@ def testInsert(startDim, dimMax, dimIncrement, numPerDim):
     plot1.set_title("Risultati per Insert implementata con le s3 strutture dati")
     plot1.set_ylabel("tempo impiegato (millisecondi)")
     plot1.set_xlabel("dimensione vettore")
+
+    # aggiungo a entrambi i grafici una piccola legenda visiva
+    insertLinkedList_patch = mpatch.Patch(color='orange', label='Linked List')
+    insertABR_patch = mpatch.Patch(color='green', label='ABR')
+    insertHash_patch = mpatch.Patch(color='blue', label='Hash')
+    plot1.legend(handles=[insertLinkedList_patch, insertABR_patch, insertHash_patch])
     plt.show()
 def testSearch(startDim, dimMax, dimIncrement, numPerDim):
     resultSearchLinkedList = []
@@ -142,6 +148,13 @@ def testSearch(startDim, dimMax, dimIncrement, numPerDim):
     plot1.set_title("Risultati per Search implementata con le 3 strutture dati")
     plot1.set_ylabel("tempo impiegato (millisecondi)")
     plot1.set_xlabel("dimensione vettore")
+
+    # aggiungo a entrambi i grafici una piccola legenda visiva
+    searchLinkedList_patch = mpatch.Patch(color='orange', label='Linked List')
+    searchABR_patch = mpatch.Patch(color='green', label='ABR')
+    searchHash_patch = mpatch.Patch(color='blue', label='Hash')
+    plot1.legend(handles=[searchLinkedList_patch, searchABR_patch, searchHash_patch])
+
     plt.show()
 def testDelete(startDim, dimMax, dimIncrement, numPerDim):
     resultDeleteLinkedList = []
@@ -202,6 +215,11 @@ def testDelete(startDim, dimMax, dimIncrement, numPerDim):
     plot1.set_title("Risultati per Delete implementata con le 3 strutture dati")
     plot1.set_ylabel("tempo impiegato (millisecondi)")
     plot1.set_xlabel("dimensione vettore")
+
+    deleteLinkedList_patch = mpatch.Patch(color='orange', label='Linked List')
+    deleteABR_patch = mpatch.Patch(color='green', label='ABR')
+    deleteHash_patch = mpatch.Patch(color='blue', label='Hash')
+    plot1.legend(handles=[deleteLinkedList_patch, deleteABR_patch, deleteHash_patch])
 
     plt.show()
 
