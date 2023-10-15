@@ -47,8 +47,7 @@ class ABR:
         if v != None:
             v.p = u.p
 
-    def treeMinimum(self):
-        x = self.root
+    def treeMinimum(self,x):
         while x.left != None:
             x = x.left
         return x
