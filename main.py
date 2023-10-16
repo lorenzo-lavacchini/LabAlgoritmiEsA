@@ -7,6 +7,9 @@ import random
 import matplotlib.pyplot as plt
 from hashTable import hashTable
 import matplotlib.patches as mpatch
+import numpy as np
+import os
+from numpy import ndarray
 def createLinkedListFromGivenSet(K):
     newList = linkedList()
     for i in range (len(K)):
@@ -33,7 +36,7 @@ def testInsert(startDim, dimMax, dimIncrement, numPerDim):
         totTimeHash = 0
         U = []
         K = []
-        for j in range(10000):
+        for j in range(5000):
             U.append(j)
         for p in range(i):
             index = random.randint(0, len(U) - 1)
@@ -91,6 +94,31 @@ def testInsert(startDim, dimMax, dimIncrement, numPerDim):
     insertHash_patch = mpatch.Patch(color='blue', label='Hash')
     plot1.legend(handles=[insertLinkedList_patch, insertABR_patch, insertHash_patch])
     plt.show()
+
+    # crea la catella per le tabelle se non esiste
+    if not os.path.exists("tables"):
+        os.makedirs("tables")
+
+    # Disegna la tabella
+    traceTables(
+        *[
+            [
+                [i for i in range(startDim, dimMax, dimIncrement)],
+                ["{:.3e}".format(val) for val in resultInsertLinkedList],
+                ["{:.3e}".format(val) for val in resultInsertABR],
+                ["{:.3e}".format(val) for val in resultInsertHash],
+            ],
+            (
+                "Nr elementi",
+                "Insert",
+                "Linked List",
+                "ABR",
+                "HashTable"
+            ),
+            "Inserimento eseguito sulle 3 strutture dati",
+        ]
+    )
+
 def testSearch(startDim, dimMax, dimIncrement, numPerDim):
     resultSearchLinkedList = []
     resultSearchABR = []
@@ -101,7 +129,7 @@ def testSearch(startDim, dimMax, dimIncrement, numPerDim):
         totTimeHash = 0
         U = []
         K = []
-        for j in range(20000):
+        for j in range(5000):
             U.append(j)
         for p in range(i):
             index = random.randint(0, len(U) - 1)
@@ -157,6 +185,30 @@ def testSearch(startDim, dimMax, dimIncrement, numPerDim):
     plot1.legend(handles=[searchLinkedList_patch, searchABR_patch, searchHash_patch])
 
     plt.show()
+
+    # crea la catella per le tabelle se non esiste
+    if not os.path.exists("tables"):
+        os.makedirs("tables")
+
+    # Disegna la tabella
+    traceTables(
+        *[
+            [
+                [i for i in range(startDim, dimMax, dimIncrement)],
+                ["{:.3e}".format(val) for val in resultSearchLinkedList],
+                ["{:.3e}".format(val) for val in resultSearchABR],
+                ["{:.3e}".format(val) for val in resultSearchHash],
+            ],
+            (
+                "Nr elementi",
+                "Search",
+                "Linked List",
+                "ABR",
+                "HashTable"
+            ),
+            "Ricerca eseguita sulle 3 strutture dati",
+        ]
+    )
 def testDelete(startDim, dimMax, dimIncrement, numPerDim):
     resultDeleteLinkedList = []
     resultDeleteABR = []
@@ -168,7 +220,7 @@ def testDelete(startDim, dimMax, dimIncrement, numPerDim):
         totTimeHash = 0
         U = []
         K = []
-        for j in range(20000):
+        for j in range(5000):
             U.append(j)
         for p in range(i):
             index = random.randint(0, len(U) - 1)
@@ -224,13 +276,67 @@ def testDelete(startDim, dimMax, dimIncrement, numPerDim):
 
     plt.show()
 
+    # crea la catella per le tabelle se non esiste
+    if not os.path.exists("tables"):
+        os.makedirs("tables")
+
+    # Disegna la tabella
+    traceTables(
+        *[
+            [
+                [i for i in range(startDim, dimMax, dimIncrement)],
+                ["{:.3e}".format(val) for val in resultDeleteLinkedList],
+                ["{:.3e}".format(val) for val in resultDeleteABR],
+                ["{:.3e}".format(val) for val in resultDeleteHash],
+            ],
+            (
+                "Nr elementi",
+                "Delete",
+                "Linked List",
+                "ABR",
+                "HashTable"
+            ),
+            "Cancellazione eseguita sulle 3 strutture dati",
+        ]
+    )
+def traceTables(columns: list, headers: tuple, title: str):
+    fig, ax = plt.subplots(figsize=(8, 10))
+
+    # Dati per il plot della tabella (è necessario convertire in it is necessary to convert il tutto in un array numpyy)
+    data = np.column_stack(columns)
+
+    # Setta il titolo delle tabella
+    ax.axis("off")
+    table = ax.table(cellText=data, colLabels=headers, loc="center", cellLoc="center")
+    table.auto_set_column_width(col=list(range(len(columns))))
+    table.scale(1, 1.5)
+
+    # Colora i titoli e le righe pari
+    cell_colors = {
+        cell: ("#ffd1d1", {"weight": "bold"})
+        if table[cell].get_text().get_text() in headers
+        else ("#ffe4e4", {})
+        for cell in table._cells
+        if cell[0] % 2 == 0
+    }
+    for cell, (color, text_props) in cell_colors.items():
+        # setta il colore delle celle
+        table[cell].set_facecolor(color)
+        # set the text properties of the cell
+        table[cell].set_text_props(**text_props)
+        # ** used to expand the dictionary
+
+    # save the plot as a png file
+    fig.savefig(f"tables/{title}.png", dpi=300, bbox_inches="tight")
+    # clear figure for the next plot
+    plt.clf()
+
 if __name__ == '__main__':
     startDim = 1
     dimMax = 1000 #5000
     dimIncrement = 50 #250
     numPerDim = 100 #1000
-    testInsert(startDim, dimMax, dimIncrement, numPerDim)
+    #testInsert(startDim, dimMax, dimIncrement, numPerDim)
     #testSearch(startDim, dimMax, dimIncrement, numPerDim)
     #testDelete(startDim, dimMax, dimIncrement, numPerDim)
-
 
