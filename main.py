@@ -33,7 +33,7 @@ def testInsert(startDim, dimMax, dimIncrement, numPerDim):
         totTimeHash = 0
         U = []
         K = []
-        for j in range(5000):
+        for j in range(10000):
             U.append(j)
         for p in range(i):
             index = random.randint(0, len(U) - 1)
@@ -42,11 +42,12 @@ def testInsert(startDim, dimMax, dimIncrement, numPerDim):
         print(len(U))
         print(len(K))
 
+
         for r in range (1,numPerDim,1):
 
             keyToInsert = U[random.randint(0,len(U)-1)]
 
-            #lavoro sempre su istanze di strutture dati "nuove"
+            #lavoro sempre su istanze di strutture dati "nuove", così non sono alterate dalle iterazioni precedenti
             newLinkedList = createLinkedListFromGivenSet(K)
             elementToInsert = element(keyToInsert)
             startTimeStamp = timer()
@@ -80,7 +81,7 @@ def testInsert(startDim, dimMax, dimIncrement, numPerDim):
     plot1.plot(x_axis, resultInsertLinkedList, label="LinkedList insert ", color="orange")
     plot1.plot(x_axis, resultInsertABR, label="ABR insert ", color="green")
     plot1.plot(x_axis, resultInsertHash, label="HashTable insert ", color="blue")
-    plot1.set_title("Risultati per Insert implementata con le s3 strutture dati")
+    plot1.set_title("Risultati per Insert implementata con le 3 strutture dati")
     plot1.set_ylabel("tempo impiegato (millisecondi)")
     plot1.set_xlabel("dimensione vettore")
 
@@ -100,7 +101,7 @@ def testSearch(startDim, dimMax, dimIncrement, numPerDim):
         totTimeHash = 0
         U = []
         K = []
-        for j in range(5000):
+        for j in range(20000):
             U.append(j)
         for p in range(i):
             index = random.randint(0, len(U) - 1)
@@ -167,7 +168,7 @@ def testDelete(startDim, dimMax, dimIncrement, numPerDim):
         totTimeHash = 0
         U = []
         K = []
-        for j in range(5000):
+        for j in range(20000):
             U.append(j)
         for p in range(i):
             index = random.randint(0, len(U) - 1)
@@ -225,11 +226,11 @@ def testDelete(startDim, dimMax, dimIncrement, numPerDim):
 
 if __name__ == '__main__':
     startDim = 1
-    dimMax = 1000
-    dimIncrement = 100
-    numPerDim = 100
+    dimMax = 1000 #5000
+    dimIncrement = 50 #250
+    numPerDim = 100 #1000
     testInsert(startDim, dimMax, dimIncrement, numPerDim)
-    testSearch(startDim, dimMax, dimIncrement, numPerDim)
-    testDelete(startDim, dimMax, dimIncrement, numPerDim)
+    #testSearch(startDim, dimMax, dimIncrement, numPerDim)
+    #testDelete(startDim, dimMax, dimIncrement, numPerDim)
 
 
